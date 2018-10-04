@@ -1,0 +1,5 @@
+.kitchen/
+*.pyc
+*.rake_tasks~
+*.swp
+Gemfile.lock
