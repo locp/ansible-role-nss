@@ -1,2 +1,6 @@
-# ansible-role-solid
-Install Inrupt Solid onto a Node
+# ansible-role-nss
+Install Node Solid Server
+
+## Links
+
+- https://solid.inrupt.com/
