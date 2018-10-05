@@ -1,0 +1,46 @@
+---
+# .kitchen.yml:  Test Kitchen configuration file.
+driver:
+  name: docker
+  use_sudo: false
+
+platforms:
+  - name: debian-9
+    driver_config:
+      platform: debian
+      provision_command:
+        - apt-get install -y apt-utils libffi-dev python-pycparser python-apt python-dev python-pip
+        - pip install ansible==2.6.0.0
+
+provisioner:
+  additional_copy_path:
+    - tests
+  ansible_inventory: tests/inventory
+  ansible_verbose: false
+  ansible_verbosity: 1
+  hosts: all
+  name: ansible_playbook
+  require_ansible_repo: false
+  require_chef_for_busser: false
+  require_chef_omnibus: false
+  require_pip: false
+  role_name: solid
+
+verifier:
+  name: serverspec
+  sudo_path: true
+
+suites:
+  - name: apply
+    verifier:
+      patterns:
+        - tests/spec/common/*_spec.rb
+        - tests/spec/debian/*_spec.rb
+    provisioner:
+      idempotency_test: true
+      playbook: tests/test.yml
+
+  - name: check
+    provisioner:
+      ansible_check: true
+      playbook: tests/test.yml

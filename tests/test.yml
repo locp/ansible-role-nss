@@ -1,0 +1,8 @@
+# Standards: 0.1
+---
+- hosts: solid
+
+  become: yes
+
+  roles:
+  - solid

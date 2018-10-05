@@ -28,3 +28,13 @@ install:
 
 script:
   - make
+  - bundle exec kitchen create $INSTANCE || true # A minor schlonk to avoid failure during kitchen build.
+  - bundle exec kitchen test $INSTANCE
+
+matrix:
+  fast_finish: true
+  include:
+  - python: 2.7
+    env: INSTANCE="apply-debian-9"
+  - python: 2.7
+    env: INSTANCE="check-debian-9"
